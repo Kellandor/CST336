@@ -1,0 +1,150 @@
+.bb{
+    background-image: url(http://logos-download.com/wp-content/uploads/2016/09/Unity_logo_logotype_Unity_3D.png);
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-size: 75%;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: teal;
+}
+
+#maintitle{
+    font-size: 5em;
+    color: white;
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.navigation{
+    text-align: center;
+    overflow: hidden;
+}
+
+.navigation-items{
+    list-style-type: none;
+    display: inline-block;
+    padding: 0px 10px;
+}
+
+.navigation-items a{
+    color: blue;
+    text-decoration: underline;
+    padding: 10px 10px;
+    margin: 5px 5px;
+    font-size: 1.5em;
+}
+
+.navigation-items a:hover{
+    background-color: red;
+    border-bottom: 3px orange solid;
+	font-size: 1.7em;
+	color: aqua;
+	transition: .9s;
+}
+
+nav a:active{
+	background-color: orange;
+}
+
+.currenttab{
+	background-color: red;
+}
+
+.clearall{
+    clear: both;
+}
+
+
+#homemain{
+    margin-left: 100px;
+    margin-right: 100px;
+    text-align: center;
+}
+
+#mainheader, #factsheader{
+    font-size: 4em;
+    font-weight: bold;
+    text-align: center;
+}
+
+#maintext{
+    font-size: 2em;
+    color: white;
+}
+
+#images{
+    padding-top: 100px;
+    display:block;
+    margin: 0 auto;
+}
+
+span{
+    font-weight: bold;
+}
+
+#companymain, #mainmisc{
+    margin: 0;
+	padding: 0;
+	padding-top: 50px;
+	width: auto;
+	text-align: center;
+}
+
+#companytext{
+    display:inline-block;
+    text-align: left;
+    width: 500px;
+    font-size: 1.5em;
+    color: white;
+}
+
+#companygraph, #factsfigure{
+    display:inline-block;
+    font-size: 1em;
+    color: white;
+}
+
+#mainfacts{
+    text-align: center;
+    color: aqua;
+}
+
+#factList{
+    display:inline-block;
+    text-align: left;
+    font-size: 1.5em;
+    color: white;
+}
+
+#miscbody{
+    background-image: url(http://unity-chan.com/images/imgKohaku.png);
+    background-color: black;
+    background-repeat:no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+#misctext{
+    text-align: left;
+    float:left;
+    padding-left: 100px;
+    padding-top: 100px;
+    width: 500px;
+    font-size: 1.5em;
+    color: white;
+}
+
+#miscimg{
+    float:right;
+    padding-right: 100px;
+    padding-top: 100px;
+}
+
+#sourcemain{
+    margin: 0;
+	padding: 0;
+	padding-top: 50px;
+	width: auto;
+	text-align: center;
+	font-size: 1.5em;
+}
