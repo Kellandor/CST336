@@ -1,0 +1,87 @@
+body{
+	text-align: center;
+	background-image:url("../img/dice.jpg");
+	background-color: black;
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-attachment: fixed;
+    background-position: center;
+    color: red;
+    height: 100%;
+}
+
+h1{
+    background-image: url("../img/Banner.jpg");
+    font-size: 5em;
+    margin: 0px;
+}
+
+#headertext{
+    margin: 0px;
+    font-size: .3em !important;
+    color: black !important;
+}
+
+#textfield, #formtext{
+    font-size: 3em;
+    font-weight: bold;
+}
+
+footer{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+.navigation{
+    text-align: center;
+    overflow: hidden;
+}
+
+.navigation-items{
+    list-style-type: none;
+    display: inline-block;
+    padding: 0px 10px;
+}
+
+.navigation-items a{
+    color: blue;
+    text-decoration: underline;
+    padding: 10px 10px;
+    margin: 5px 5px;
+    font-size: 1.5em;
+}
+
+.navigation-items a:hover{
+    background-color: red;
+    border-bottom: 3px orange solid;
+	font-size: 1.7em;
+	color: aqua;
+	transition: .9s;
+}
+
+nav a:active{
+	background-color: orange;
+}
+
+.currenttab{
+	background-color: brown;
+}
+
+table{
+    margin: 0px auto;
+}
+
+td{
+    padding: 10px;
+    font-size: 1.3em;
+}
+
+#tablecontent{
+    font-size: 1.3em;
+    width: auto;
+}
+
+#output{
+    font-size: 5em !important;
+}
