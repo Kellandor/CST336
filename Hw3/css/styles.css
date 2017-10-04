@@ -1,0 +1,39 @@
+body{
+    width: 95%;
+    margin: auto auto;
+    text-align:center;
+    display: inline-block;
+    background-color:black;
+    color:black;
+    font-size: 1.5em;
+    background-image: url("../img/wryyy.gif");
+    background-size:50%;
+}
+
+.container{
+    height: 30px;
+}
+
+.left {
+    width: 50%;
+    float: left;
+    text-align: right;
+}
+.right {
+    margin-left: 35px;
+    float:left;
+}
+
+.clearall{
+    clear:left;
+    clear:right;
+}
+
+#submit, h1, h2{
+    padding-left: 100px;
+}
+
+#maintext{
+    font-size: 1.5em;
+    color: black;
+}
