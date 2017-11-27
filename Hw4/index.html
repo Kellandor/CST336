@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!--<style>@import url("css/styles.css");</style>-->
+
+        <title> Dice Roller </title>
+        <link  href="css/styles.css" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    </head> 
+    <body>
+        <div id="main">
+            <h1>DND Dice Roller</h1>
+            <hr width="80%"/>
+            
+            <div id="select">
+                <h3>Select The Mode</h3>
+                <input type="button" id="premade" value="Premade">
+                <input type="button" id="custom" value="Custom">
+            </div>
+            
+            <div id="input">
+                <h3>Input Dice Size to Roll</h3>
+                <input type="text" id="inputdice">
+                <input type="button" id="roll" value="Roll!">
+            </div>
+            
+            <div id="dice">
+                <h3>Select Dice to Roll:</h3>
+            </div>
+            
+            <div id="result">
+            </div>
+            
+        </div>
+        <script src="js/dice.js"></script>
+    </body>
+        
+</html>

@@ -1,0 +1,47 @@
+body{
+	text-align: center;
+	background-image:url("../img/dice.jpg");
+	background-color: black;
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-attachment: fixed;
+    background-position: center;
+    color: red !important;
+    height: 100%;
+}
+
+h1{
+    background-image: url("../img/Banner.jpg");
+    font-size: 5em !important;
+    margin: 0px;
+}
+
+#headertext{
+    margin: 0px;
+    font-size: .3em !important;
+    color: black !important;
+}
+
+#textfield, #formtext{
+    font-size: 3em;
+    font-weight: bold;
+}
+
+footer{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+#input, #dice, #result{
+    display: none;
+}
+
+h3 {
+    font-size: 3.5em !important;
+}
+
+#result {
+    font-size: 10em !important;
+}
