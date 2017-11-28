@@ -10,8 +10,8 @@ function initButton()
 {
     for(var value in dice)
     {
-        $("#dice").append("<button class='button' id='" + dice[value] +"' value='" + dice[value] + "'>" + dice[value] +"</button>");
-        $('.button').click(function()
+        $("#dice").append("<button class='btn btn-danger btn-lg' id='" + dice[value] +"' value='" + dice[value] + "'>" + dice[value] +"</button>");
+        $('.btn').click(function()
         {
             $temp = parseInt($(this).attr('id'), 10);
             $temp = Math.floor(Math.random()*($temp) + 1);
