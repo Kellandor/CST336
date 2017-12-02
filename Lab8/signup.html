@@ -1,0 +1,137 @@
+<head>
+    <meta charset="utf-8"/>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<style>@import url("./css/styles.css");</style>
+</head>
+<body id="dummybodyid">
+    <div class="container">
+        <div class="text-info">
+   <h1> Sign Up Form </h1>
+
+    <form onsubmit="return false;">
+        <div class="form-group">
+        <fieldset>
+           <!--<legend class="text-danger">Sign Up</legend>-->
+            First Name:  <input type="text"><br> 
+            Last Name:   <input type="text"><br> 
+            Email:       <input type="text"><br> 
+            Phone Number:<input type="text"><br><br>
+            Zip Code:    <input type="text" id="zipcode" onchange="getAPI();"><span id="invalidzip"></span><br>
+            <div id="city">City: </div>
+            <div id="latitude">Latitude: </div>
+            <div id="longitude">Longitude: </div>
+            <br><br>
+            State: <select id="state" onchange="getCounty();">
+                <option value="">Select...</option>
+                <option value="ca">California</option>
+                <option value="or">Oregon</option>
+                <option value="nv">Nevada</option>
+                <option value="wa">Washington</option>
+            </select>
+            Select a County: <select id="county"></select><br>
+            
+            Desired Username: <input type="text" id="username" onchange="getUser();"><span id="validity"></span><br>
+            Password: <input type="password" id="password"><br>
+            Type Password Again: <input type="password" id="confirmPassword" onchange="checkPw();"><span id="checkpassword"></span><br>
+            <input type="submit" value="Sign up!" class="btn btn-danger"> 
+        </fieldset>
+        </div>
+    </form>
+    
+      <script> 
+
+
+  	function getCounty() {        
+      $.ajax({
+            type: "get",
+             url: "api1.php",
+        dataType: "json",
+            data: {
+                   "url" : "http://hosting.otterlabs.org/laramiguel/ajax/countyList.php",
+                   "state":$("#state").val()
+            },
+            success: function(data,status) {
+                $('#county').html("");
+                for (var i = 0; i < data['counties'].length; i++ ) {
+                    if(data['counties'][i]['county'].length != 0)
+                 	    $('#county').append("<option>" + data['counties'][i]['county'] + "</option>");
+                }
+              },
+            complete: function(data,status) { //optional, used for debugging purposes
+                 //alert(status);
+            }
+         });
+    }
+    
+    function getAPI(){
+              $.ajax({
+            type: "get",
+             url: "api.php",
+        dataType: "json",
+            data: {
+                   //"format":"geojson",
+                   "url": "http://hosting.otterlabs.org/laramiguel/ajax/zip.php",
+                   "zip_code":$("#zipcode").val()
+            },
+            success: function(data,status) {
+                if(jQuery.isEmptyObject(data))
+                {
+                    $("#invalidzip").html("ERROR! No such zipcode. Please try again.").css("color", "red");
+                    return;
+                }
+                else
+                {
+                $("#invalidzip").html("");
+                $('#city').html(" ");
+                $('#latitude').html(" ");
+                $('#longitude').html(" ");
+                
+                $('#city').append("City: " + data['city']);
+                $('#latitude').append("Latitude: " + data['latitude']);
+                $('#longitude').append("Longitude: " + data['longitude']);
+                }
+              },
+            complete: function(data,status) { //optional, used for debugging purposes
+                 //alert(status);
+            }
+         });
+    }
+    
+    function getUser(){
+        $.ajax({
+            type: "get",
+             url: "api3.php",
+        dataType: "json",
+            data: {
+                   "username":$("#username").val()
+            },
+            success: function(data,status) {
+                    if(data == null)
+                    {
+                        $("#validity").html("Username is available.").css("color", "green");
+                    }
+                    else
+                    {
+                        $("#validity").html("Username is not available.").css("color", "red");
+                    }
+              },
+            complete: function(data,status) { //optional, used for debugging purposes
+            }
+         });
+    }
+    
+    function checkPw(){
+        if($("#password").val() != $("#confirmPassword").val())
+            $("#checkpassword").html("Passwords dont match.");
+        else
+            $("#checkpassword").html("");
+        }
+        
+ 	</script>
+ 	</div>
+ 	</div>
+</body>
