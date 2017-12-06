@@ -16,6 +16,7 @@
             SET firstName='$fName', lastName='$lName', email='$email', phone='$phone', role='$role', deptId='$department' 
             WHERE id=".$uId;
 
+    echo $sql;
     $stmt = $conn ->prepare($sql);
     $stmt->execute();
     
