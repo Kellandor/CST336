@@ -1,0 +1,38 @@
+#hide, #adminPage, #addUserForm, #logoutbutton, #updateUserForm, #reportContainer, #userSearchDiv{
+    display: none;
+}
+
+#userList{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin: 0px auto !important;
+    padding-left: 70px !important;
+}
+
+#userSearchResultsDiv {
+    padding-top: 50px !important;
+    padding-bottom: 50px;
+    padding-left: 275px !important;
+}
+
+th {
+    width:200px !important;
+    text-align: center;
+    border: 1px solid black;
+    height: 50px;
+    vertical-align: middle;
+}
+
+body {
+    background-color: #808080 !important;
+    color: #990000 !important;
+}
+
+.container {
+    border: 1px solid black !important;
+}
+
+#reports {
+    font-size: 1.5em !important;
+    padding-bottom: 50px;
+}

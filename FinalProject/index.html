@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+            <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+		<link rel="stylesheet" type="text/css" href="./css/style.css">
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <title>Final Project</title>
+    </head>
+    <body>
+
+        <div class="container">
+        <div class="text-center">
+        <h1>Tech Device Database</h1>
+        <div id="formcontainer">
+        <form>
+            <div id="adminShow">
+                <input type="button" class="btn btn-default" onclick="adminSection();" value="Admin">
+            </div>
+
+            <div id="hide">
+                Username:<input type="text" id="username">
+                Password:<input type="password" id="password">
+                <input type="button" value="Login" class="btn btn-default" onclick="adminLogin();">
+                <input type="button" value="Back" class="btn btn-default" onclick="logOut();">
+            </div>
+            <div id="userShow">
+                    <div id="userButton"><input type="button" class="btn btn-default" onclick="userSection();" value="User"></div>
+                    <div id="userSearchDiv">
+                        <div id="backButton"><input type="button" class="btn btn-default" value="Back To Menu" onclick="logOut();"></div>
+                        <input type="text" id="searchbar" placeholder="Enter data type">
+                        Sort by:<select id="sortBy">
+                            <option value=""> - Select - </option>
+                            <option value="deviceName">Name</option>
+                            <!--<option value="deviceType">Type</option>-->
+                            <option value="price">Price</option>
+                        </select>
+                        Order: <input type="radio" name="order" value="asc">Asc
+                               <input type="radio" name="order" value="desc">Desc
+                        <input type="button" value="Query!" class="btn btn-info" onclick="sort();">
+                    </div>
+                    <div id="userSearchResultsDiv" class="text-center"></div>
+            </div>
+            
+            <div id="logoutbutton">
+                <input type="button" value="Logout" class="btn btn-default" onclick="logOut();">
+            </div>
+        </form>
+        
+        </div>
+        
+        <div id="adminPage">
+            
+            <div id="addUserButtonDiv">
+                <input type="button" id="addUser" value="Add User" class="btn btn-default" onclick="addUserForm();"><br>
+            </div>
+            
+            <div id="reportDiv">
+                <input type="button" id="reportButton" value="Generate Reports" class="btn btn-success" onclick="generateReport();"><br>
+            </div>
+
+            <div id="addUserForm">
+                First Name:<input type="text" id="firstName" />
+                <br />
+                Last Name:<input type="text" id="lastName"/>
+                <br/>
+                Email: <input type= "email" id ="email"/>
+                <br/>
+                Phone Number: <input type ="text" id= "phoneNum"/>
+                <br />
+                Role: 
+                <select id="role">
+                <option value=""> - Select One - </option>
+                <option value="Staff">Staff</option>
+                <option value="Student">Student</option>
+                <option value="Faculty">Faculty</option>
+                </select>
+                Department:
+                <select id="department">
+                    <option value=""> - Select One - </option>
+                    <option value="1">Computer Science</option>
+                    <option value="2">Statistics</option>
+                    <option value="3">Design</option>
+                    <option value="4">Economics</option>
+                    <option value="5">Drama</option>
+                    <option value="6">Biology</option>
+                </select>
+                <input type="button" id="addUserButton" class="btn btn-success" value="Add" onclick="addUser();">
+                <br />   
+            </div>
+            
+            <div id="userList" class="text-center">
+                
+            </div>
+        </div>
+        
+        <div id="updateUserForm">
+                First Name:<input type="text" id="ufirstName" /><br />
+                Last Name:<input type="text" id="ulastName"/><br/>
+                Email: <input type= "email" id ="uemail"/><br/>
+                Phone Number: <input type ="text" id= "uphoneNum"/><br />
+                Role: 
+                <select id="urole">
+                <option value=""> - Select One - </option>
+                <option value="Staff">Staff</option>
+                <option value="Student">Student</option>
+                <option value="Faculty">Faculty</option>
+                </select>
+                Department:
+                <select id="udepartment">
+                    <option value=""> - Select One - </option>
+                    <option value="1">Computer Science</option>
+                    <option value="2">Statistics</option>
+                    <option value="3">Design</option>
+                    <option value="4">Economics</option>
+                    <option value="5">Drama</option>
+                    <option value="6">Biology</option>
+                </select>
+                <input type="button" value="Update" class="btn btn-success" id="updateButton" onclick="updateUser();">
+        </div>
+        
+        <div id="reportContainer">
+            <input type="button" id="reportsbutton" class="btn btn-default" value="Back" onclick="back();"><br>
+                <div id="reports">
+            
+                </div>
+        </div>
+
+        
+        <script>
+            function back()
+            {
+                $("#reportContainer").hide();
+                $("#addUserButtonDiv").show();
+                $("#reportDiv").show();
+                $("#userList").show();
+            }
+        
+            function adminSection()
+            {
+                $("#adminShow").hide();
+                $("#hide").show();
+                $("#userShow").hide();
+            }
+            
+            function logOut()
+            {
+                // $("#adminPage").hide();
+                // $("#hide").hide();
+                // $("#adminShow").show();
+                // $("#userShow").show();
+                location.reload();
+            }
+            
+            function adminLogin()
+            {
+                $.ajax({
+                    type: "post",
+                    url: "./php/admin.php",
+                    dataType: "text",
+                    data: {
+                        "username":$("#username").val(),
+                        "password":$("#password").val()
+                    },
+                    success: function(data,status) {
+                        if(data == "Login successfully")
+                        {
+                            //alert("Logged in successfully");
+                            $("#hide").hide();
+                            $("#logoutbutton").show();
+                            $("#adminShow").hide();
+                            $("#adminPage").show();
+                            $("#userShow").hide();
+                            
+                            $.ajax({
+                            url: "./php/getuser.php",
+                            dataType: "json",
+                            success: function(data,status) {
+                                $("#userList").append("<tr style='color: black;'><th>ID</th><th>First Name</th><th>Last Name</th><th>Update</th><th>Delete</th></tr><br>");
+                                for(var i = 0; i < data.length; i++)
+                                {
+                                    // $("#userList").append(data[i][0] + " " + data[i][1] + " " + data[i][2]);
+                                    // $("#userList").append("<input type='button' class='"+data[i][0]+"' value='Update'>");
+                                    // $("#userList").append("<input type='button' class='"+data[i][0]+"' value='Delete'>" + "<br>");
+                                    $("#userList").append("<tr><th>" +data[i][0] + "</th><th> " + data[i][1] + "</th><th> " + data[i][2] + 
+                                    "</th><th><input type='button' class='"+data[i][0]+" btn-primary' value='Update'></th>" + 
+                                    "<th><input type='button' class='"+data[i][0]+" btn-danger' value='Delete'>" + "</th></tr><br>");
+                                    $("."+data[i][0]+"").on("click", function(){
+                                      if($(this).attr("value") == "Update")
+                                      {
+                                            $("#adminPage").hide();
+                                            $("#updateUserForm").show();
+                                            updateUserButton($(this).attr("class"));
+                                            //console.log("updated " + $(this).attr("class"));
+                                        }
+                                       
+                                       if($(this).attr("value") == "Delete")
+                                      {
+                                          //console.log("Deleted" + $(this).attr("class"));
+                                          if(confirm("Are you sure you want to delete this user?"))
+                                          {
+                                              deleteUser($(this).attr("class"));
+                                          }
+                                      } 
+                                    });
+                                }
+                            },
+                            complete: function(data,status) { //optional, used for debugging purposes
+
+                            }
+                        });
+                            
+                        }
+                        else
+                            alert("Invalid Login");
+                    },
+                    complete: function(data,status) { //optional, used for debugging purposes
+                        //alert(status);
+                    }
+                });
+            }
+            
+            function getUser()
+            {
+                $.ajax({
+                    type: "post",
+                    url: "./php/getuser.php",
+                    dataType: "json",
+                    success: function(data,status) {
+                        alert("In getUser");
+                    },
+                    complete: function(data,status) { //optional, used for debugging purposes
+                    }
+                });
+            }
+            
+            function addUserForm()
+            {
+                $("#hide").hide();
+                $("#adminShow").hide();
+                $("#addUserForm").show();
+                $("#userList").hide();
+                $("#reportDiv").hide();
+                $("#addUserButtonDiv").hide();
+            }
+            
+            function addUser()
+            {
+                    $.ajax({
+                    type: "post",
+                    url: "./php/adduser.php",
+                    data: {
+                        "firstName":$("#firstName").val(),
+                        "lastName":$("#lastName").val(),
+                        "email":$("#email").val(),
+                        "phone":$("#phoneNum").val(),
+                        "role":$("#role").val(),
+                        "department":$("#department").val()
+                    },
+                    
+                    success: function(data,status) {
+                        $("#addUserForm").hide();
+                        $("#reportDiv").show();
+
+                        alert("User successfully added.");
+                        
+                        $("#userList").html("");
+                        $.ajax({
+                            url: "./php/getuser.php",
+                            dataType: "json",
+                            success: function(data,status) {
+                                $("#userList").append("<tr style='color: black;'><th>ID</th><th>First Name</th><th>Last Name</th><th>Update</th><th>Delete</th></tr><br>");
+                                for(var i = 0; i < data.length; i++)
+                                {
+                                    $("#userList").append("<tr><th>" +data[i][0] + "</th><th> " + data[i][1] + "</th><th> " + data[i][2] + 
+                                    "</th><th><input type='button' class='"+data[i][0]+" btn-primary' value='Update'></th>" + 
+                                    "<th><input type='button' class='"+data[i][0]+" btn-danger' value='Delete'>" + "</th></tr><br>");
+                                    $("."+data[i][0]+"").on("click", function(){
+                                      if($(this).attr("value") == "Update")
+                                      {
+                                            $("#adminPage").hide();
+                                            $("#updateUserForm").show();
+                                            updateUserButton($(this).attr("class"));
+                                        }
+                                       
+                                       if($(this).attr("value") == "Delete")
+                                      {
+                                          if(confirm("Are you sure you want to delete this user?"))
+                                          {
+                                              deleteUser($(this).attr("class"));
+                                          }
+                                      } 
+                                    });
+                                }
+                            },
+                            complete: function(data,status) { //optional, used for debugging purposes
+
+                            }
+                        });
+                        
+                        $("#userList").show();
+                        $("#addUserButtonDiv").show()
+                        
+                    },
+                    complete: function(data,status) { //optional, used for debugging purposes
+                        //alert(status);
+                    }
+                });
+            }
+            
+            function updateUserButton(id)
+            {
+                $.ajax({
+                    type: "get",
+                    url: "./php/updateuser.php",
+                    dataType:"json",
+                    data: {
+                        "id":id
+                    },
+                    
+                    success: function(data,status) {
+                        $("#ufirstName").attr("value", data[0][['firstName']]);
+                        $("#ulastName").attr("value", data[0][['lastName']]);
+                        $("#uemail").attr("value", data[0][['email']]);
+                        $("#uphoneNum").attr("value", data[0][['phone']]);
+                        $("#urole").val(data[0][['role']]);
+                        $("#udepartment").val(data[0][['deptId']]);
+                        $("#updateButton").attr("name", id);
+                    },
+                    complete: function(data,status) { //optional, used for debugging purposes
+                        //alert(status);
+                    }
+                });
+            }
+            
+            function deleteUser(id)
+            {
+                    $.ajax({
+                    type: "get",
+                    url: "./php/deleteuser.php",
+                    data: {
+                        "id":id
+                    },
+                    
+                    success: function(data,status) {
+                        alert("User removed");
+                        
+                        $("#userList").html("");
+                        $.ajax({
+                            url: "./php/getuser.php",
+                            dataType: "json",
+                            success: function(data,status) {
+                                $("#userList").append("<tr style='color: black;'><th>ID</th><th>First Name</th><th>Last Name</th><th>Update</th><th>Delete</th></tr><br>");
+                                for(var i = 0; i < data.length; i++)
+                                {
+                                    $("#userList").append("<tr><th>" +data[i][0] + "</th><th> " + data[i][1] + "</th><th> " + data[i][2] + 
+                                    "</th><th><input type='button' class='"+data[i][0]+" btn-primary' value='Update'></th>" + 
+                                    "<th><input type='button' class='"+data[i][0]+" btn-danger' value='Delete'>" + "</th></tr><br>");
+                                    $("."+data[i][0]+"").on("click", function(){
+                                      if($(this).attr("value") == "Update")
+                                      {
+                                            $("#adminPage").hide();
+                                            $("#updateUserForm").show();
+                                            updateUserButton($(this).attr("class"));
+                                        }
+                                       
+                                       if($(this).attr("value") == "Delete")
+                                      {
+                                          if(confirm("Are you sure you want to delete this user?"))
+                                          {
+                                              deleteUser($(this).attr("class"));
+                                          }
+                                      } 
+                                    });
+                                }
+                            },
+                            complete: function(data,status) { //optional, used for debugging purposes
+
+                            }
+                        });
+                    },
+                    complete: function(data,status) { //optional, used for debugging purposes
+                        //alert(status);
+                    }
+                });
+            }
+            
+            function updateUser()
+            {
+                $.ajax({
+                    type: "post",
+                    url: "./php/update.php",
+                    data: {
+                        "id":$("#updateButton").attr('name'),
+                        "firstName":$("#ufirstName").val(),
+                        "lastName":$("#ulastName").val(),
+                        "email":$("#uemail").val(),
+                        "phone":$("#uphoneNum").val(),
+                        "role":$("#urole").val(),
+                        "department":$("#udepartment").val()
+                    },
+                    
+                    success: function(data,status) {
+                        $("#adminPage").show();
+                        $("#updateUserForm").hide();
+                        alert("User Updated");
+                    },
+                    complete: function(data,status) { //optional, used for debugging purposes
+                        //alert(status);
+                    }
+                });
+            }
+            
+            function generateReport()
+            {
+                    $.ajax({
+                    url: "./php/generatereport.php",
+                    dataType: "json",
+                    
+                    success: function(data,status) {
+                        $("#addUserButtonDiv").hide();
+                        $("#reportDiv").hide();
+                        $("#userList").hide();
+                        $("#reportContainer").show();
+                        
+                        $("#reports").html("");
+                        $("#reports").show();
+                        
+                        $("#reports").append("Total Number of Users in Database: " + data['total'] +"<br>");
+                        $("#reports").append("There are " + data['staff'] + " staff members, " + data['faculty'] + " faculty members, and " + data['student'] +" students.<br>");
+                        $("#reports").append("There are " + data['Computer Science'] + " from Computer Science Department, " + data['Statistics'] + " from Statistics Department, "
+                                            + data['Design'] + " from Design Department, " + data['Economics'] + " from Economics Department, " 
+                                            + data['Drama'] + " from Drama Department, and " + data['Biology'] + " from Biology Department.");
+                        
+                    },
+                    complete: function(data,status) { //optional, used for debugging purposes
+                        //alert(status);
+                    }
+                });
+            }
+            
+            
+            function userSection()
+            {
+                $("#adminShow").hide();
+                $("#userButton").hide();
+
+                $.ajax({
+                url: "./php/getdevices.php",
+                dataType: "json",
+                
+                success: function(data,status) {
+                    
+                    $("#userSearchDiv").show();
+                    $("#userSearchResultsDiv").show();
+                    $("#userSearchResultsDiv").append("<tr style='color: black;'><th>Name</th><th>Type</th><th>Price</th></tr><br>");
+                    for(var i = 0; i <data.length; i++)
+                    {
+                        $("#userSearchResultsDiv").append("<tr><th>" + data[i]['deviceName'] + "</th><th> " + data[i]['deviceType'] + "</th><th> " + data[i]['price'] + "</th></tr><br>");
+                    }
+                },
+                complete: function(data,status) { //optional, used for debugging purposes
+                    //alert(status);
+                }
+            });
+            }
+            
+            function sort()
+            {
+                if($("#searchbar").val() == "" || $("#sortBy").val() == "")
+                {
+                    alert("Search field or sort by field is empty.");
+                }
+                else{
+
+                $.ajax({
+                type:"post",
+                url: "./php/query.php",
+                dataType: "json",
+                data:{
+                    "type": $("#searchbar").val(),
+                    "sortby": $("#sortBy").val(),
+                    "order": $("input[name='order']:checked").val()
+                },
+                success: function(data,status) {
+                    if(data.length == 0)
+                    {
+                        alert("No such device type exists in the database.");
+                    }
+                    else if (data.length > 0){
+                        $("#userSearchResultsDiv").html("");
+                        $("#userSearchResultsDiv").append("<tr style='color: black;'><th>Name</th><th>Type</th><th>Price</th></tr><br>");
+                        for(var i = 0; i <data.length; i++)
+                        {
+                            $("#userSearchResultsDiv").append("<tr><th>" + data[i]['deviceName'] + "</th><th> " + data[i]['deviceType'] + "</th><th> " + data[i]['price'] + "</th></tr><br>");
+                        }
+                    }
+                },
+                complete: function(data,status) { //optional, used for debugging purposes
+                    //alert(status);
+                }
+            });
+                }
+            }
+            
+            
+        </script>
+        </div>
+        </div>
+    </body>
+</html>
