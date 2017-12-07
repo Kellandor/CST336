@@ -246,6 +246,9 @@
             
             function addUser()
             {
+                    if($("#firstName").val() =="" || $("#firstName").val() == "" || $("#role").val() == "" || $("#department").val() == "" )
+                        alert("Empty fields.");
+                    else{
                     $.ajax({
                     type: "post",
                     url: "./php/adduser.php",
@@ -302,12 +305,13 @@
                         
                         $("#userList").show();
                         $("#addUserButtonDiv").show()
-                        
+                    
                     },
                     complete: function(data,status) { //optional, used for debugging purposes
                         //alert(status);
                     }
                 });
+                    }
             }
             
             function updateUserButton(id)
@@ -418,21 +422,23 @@
                                 for(var i = 0; i < data.length; i++)
                                 {
                                     $("#userList").append("<tr><th>" +data[i][0] + "</th><th> " + data[i][1] + "</th><th> " + data[i][2] + 
-                                    "</th><th><input type='button' class='"+data[i][0]+" btn-primary' value='Update'></th>" + 
-                                    "<th><input type='button' class='"+data[i][0]+" btn-danger' value='Delete'>" + "</th></tr><br>");
-                                    $("."+data[i][0]+"").on("click", function(){
+                                    "</th><th><input type='button' name='"+data[i][0]+"' class='btn-primary' value='Update'></th>" + 
+                                    "<th><input type='button' name='"+data[i][0]+"' class=' btn-danger' value='Delete'>" + "</th></tr><br>");// btn-primary
+                                    //$("."+data[i][0]+"").on("click", function(){
+                                    $("input[name='" + data[i][0]+"'").on("click", function(){
                                       if($(this).attr("value") == "Update")
                                       {
                                             $("#adminPage").hide();
                                             $("#updateUserForm").show();
-                                            updateUserButton($(this).attr("class"));
+                                            updateUserButton($(this).attr("name"));
                                         }
                                        
                                        if($(this).attr("value") == "Delete")
                                       {
+                                          //console.log("Deleted" + $(this).attr("class"));
                                           if(confirm("Are you sure you want to delete this user?"))
                                           {
-                                              deleteUser($(this).attr("class"));
+                                              deleteUser($(this).attr("name"));
                                           }
                                       } 
                                     });
